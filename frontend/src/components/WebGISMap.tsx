@@ -40,9 +40,14 @@ export const WebGISMap: React.FC<WebGISMapProps> = ({
         sources: {
           'osm-tiles': {
             type: 'raster',
-            tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
+            tiles: [
+              'https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png',
+              'https://b.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png',
+              'https://c.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png',
+            ],
             tileSize: 256,
-            attribution: '&copy; OpenStreetMap contributors',
+            maxzoom: 20,
+            attribution: '&copy; CartoDB &copy; OpenStreetMap contributors',
           },
           'satellite-tiles': {
             type: 'raster',
@@ -50,21 +55,30 @@ export const WebGISMap: React.FC<WebGISMapProps> = ({
               'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
             ],
             tileSize: 256,
+            maxzoom: 18,
             attribution: 'Esri World Imagery',
           },
         },
         layers: [
           {
+            id: 'osm-layer',
+            type: 'raster',
+            source: 'osm-tiles',
+            minzoom: 0,
+            maxzoom: 20,
+          },
+          {
             id: 'satellite-layer',
             type: 'raster',
             source: 'satellite-tiles',
             minzoom: 0,
-            maxzoom: 22,
+            maxzoom: 18,
           },
         ],
       },
       center: center,
-      zoom: zoom,
+      zoom: 16.5,
+      maxZoom: 18.5,
     });
 
     map.current.on('mousemove', (e) => {

@@ -10,7 +10,7 @@ import { TopologyModal } from './components/TopologyModal';
 import { FieldVerificationModal } from './components/FieldVerificationModal';
 import { CadastralReportModal } from './components/CadastralReportModal';
 import { AuthModal } from './components/AuthModal';
-import { api, getAuthToken, removeAuthToken } from './services/api';
+import { api, getAuthToken, setAuthToken, removeAuthToken } from './services/api';
 import {
   User,
   Project,
@@ -75,6 +75,7 @@ export const App: React.FC = () => {
             email: 'surveyor@cadastral.gov.in',
             password: 'Password@123',
           });
+          setAuthToken(res.data.token);
           setCurrentUser(res.data.user);
         } catch (err) {
           console.error('Auto login fallback:', err);
@@ -84,9 +85,11 @@ export const App: React.FC = () => {
     initAuth();
   }, []);
 
-  // 2. Load projects
+  // 2. Load projects only when authenticated
   useEffect(() => {
-    loadProjects();
+    if (currentUser) {
+      loadProjects();
+    }
   }, [currentUser]);
 
   const loadProjects = async () => {
