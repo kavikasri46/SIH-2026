@@ -1,11 +1,24 @@
 import React from 'react';
 import { Project, User } from '../types';
-import { Layers, ShieldCheck, Compass, UserCircle, LogOut, Plus, AlertTriangle, Cpu, FileText } from 'lucide-react';
+import {
+  Compass,
+  UserCircle,
+  LogOut,
+  Plus,
+  AlertTriangle,
+  Cpu,
+  FileText,
+  UploadCloud,
+  Map as MapIcon,
+  Sparkles
+} from 'lucide-react';
 
 interface NavbarProps {
   user: User | null;
   projects: Project[];
   activeProject: Project | null;
+  activeTab: 'STUDIO' | 'MAP';
+  onTabChange: (tab: 'STUDIO' | 'MAP') => void;
   onSelectProject: (project: Project) => void;
   onOpenNewProject: () => void;
   onOpenAIModal: () => void;
@@ -19,6 +32,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   user,
   projects,
   activeProject,
+  activeTab,
+  onTabChange,
   onSelectProject,
   onOpenNewProject,
   onOpenAIModal,
@@ -61,7 +76,36 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
         </div>
 
-        <div className="h-6 w-px bg-slate-800 mx-2" />
+        <div className="h-6 w-px bg-slate-800 mx-1" />
+
+        {/* Studio / Map View Switcher */}
+        <div className="flex items-center bg-slate-800/80 p-0.5 rounded-lg border border-slate-700">
+          <button
+            onClick={() => onTabChange('STUDIO')}
+            className={`flex items-center space-x-1.5 px-3 py-1 rounded-md text-xs font-medium transition-all ${
+              activeTab === 'STUDIO'
+                ? 'bg-cadastral-600 text-white shadow-sm'
+                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50'
+            }`}
+          >
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>AI Image Studio</span>
+          </button>
+
+          <button
+            onClick={() => onTabChange('MAP')}
+            className={`flex items-center space-x-1.5 px-3 py-1 rounded-md text-xs font-medium transition-all ${
+              activeTab === 'MAP'
+                ? 'bg-cadastral-600 text-white shadow-sm'
+                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50'
+            }`}
+          >
+            <MapIcon className="w-3.5 h-3.5" />
+            <span>WebGIS Map</span>
+          </button>
+        </div>
+
+        <div className="h-6 w-px bg-slate-800 mx-1" />
 
         {/* Project Selector Dropdown */}
         <div className="flex items-center space-x-2">
@@ -98,7 +142,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           className="flex items-center space-x-1.5 text-xs bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700 px-3 py-1.5 rounded-md transition-colors"
         >
           <Cpu className="w-3.5 h-3.5 text-cadastral-400" />
-          <span>AI Engine</span>
+          <span>AI Registry</span>
         </button>
 
         <button
@@ -118,7 +162,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           className="flex items-center space-x-1.5 text-xs bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700 px-3 py-1.5 rounded-md transition-colors"
         >
           <FileText className="w-3.5 h-3.5 text-emerald-400" />
-          <span>Export Cadastral PDF</span>
+          <span>Export PDF</span>
         </button>
 
         <div className="h-6 w-px bg-slate-800 mx-2" />

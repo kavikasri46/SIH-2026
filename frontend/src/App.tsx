@@ -3,6 +3,7 @@ import { Navbar } from './components/Navbar';
 import { Sidebar } from './components/Sidebar';
 import { WebGISMap } from './components/WebGISMap';
 import { FeatureInspector } from './components/FeatureInspector';
+import { DroneAnalysisWorkspace } from './components/DroneAnalysisWorkspace';
 import { NewProjectModal } from './components/NewProjectModal';
 import { AIModelModal } from './components/AIModelModal';
 import { TopologyModal } from './components/TopologyModal';
@@ -19,6 +20,9 @@ import {
 } from './types';
 
 export const App: React.FC = () => {
+  // Navigation State: AI Studio vs WebGIS Map
+  const [activeTab, setActiveTab] = useState<'STUDIO' | 'MAP'>('STUDIO');
+
   // Authentication State
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
@@ -26,7 +30,6 @@ export const App: React.FC = () => {
   // Projects State
   const [projects, setProjects] = useState<Project[]>([]);
   const [activeProject, setActiveProject] = useState<Project | null>(null);
-  const [isLoadingProjects, setIsLoadingProjects] = useState(true);
 
   // GIS Data State
   const [parcels, setParcels] = useState<GeoJSONFeatureCollection | null>(null);
@@ -67,7 +70,6 @@ export const App: React.FC = () => {
           removeAuthToken();
         }
       } else {
-        // Auto authenticate default senior surveyor for seamless demo experience
         try {
           const res = await api.login({
             email: 'surveyor@cadastral.gov.in',
@@ -89,7 +91,6 @@ export const App: React.FC = () => {
 
   const loadProjects = async () => {
     try {
-      setIsLoadingProjects(true);
       const res = await api.getProjects();
       setProjects(res.data);
       if (res.data.length > 0 && !activeProject) {
@@ -97,8 +98,6 @@ export const App: React.FC = () => {
       }
     } catch (err) {
       console.error('Failed to load projects:', err);
-    } finally {
-      setIsLoadingProjects(false);
     }
   };
 
@@ -124,7 +123,6 @@ export const App: React.FC = () => {
       setBuildings(buildingsRes.data);
       setRoads(roadsRes.data);
 
-      // Refresh selected feature if open
       if (selectedFeature) {
         const updated = parcelsRes.data.features.find((f) => f.id === selectedFeature.id);
         if (updated) setSelectedFeature(updated);
@@ -179,6 +177,8 @@ export const App: React.FC = () => {
         user={currentUser}
         projects={projects}
         activeProject={activeProject}
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
         onSelectProject={(p) => setActiveProject(p)}
         onOpenNewProject={() => setIsNewProjectOpen(true)}
         onOpenAIModal={() => setIsAIModalOpen(true)}
@@ -188,37 +188,55 @@ export const App: React.FC = () => {
         onLogout={handleLogout}
       />
 
-      {/* 2. MAIN 3-COLUMN WORKSPACE */}
+      {/* 2. MAIN APPLICATION CONTENT AREA */}
       <main className="flex-1 flex overflow-hidden">
-        {/* Left: GIS Layers & Project Specs */}
-        <Sidebar
-          activeProject={activeProject}
-          layers={layers}
-          onToggleLayer={handleToggleLayer}
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
-          statusFilter={statusFilter}
-          onStatusFilterChange={setStatusFilter}
-        />
+        {activeTab === 'STUDIO' ? (
+          /* TAB 1: AI DRONE IMAGE ANALYSIS STUDIO */
+          <DroneAnalysisWorkspace
+            activeProject={activeProject}
+            onNavigateToMap={() => setActiveTab('MAP')}
+            onSelectFeatureForMap={(feat) => {
+              setSelectedFeature(feat);
+              setActiveTab('MAP');
+            }}
+            onRefreshData={() => {
+              if (activeProject) {
+                loadGISLayers(activeProject.id);
+                refreshActiveProject();
+              }
+            }}
+          />
+        ) : (
+          /* TAB 2: INTERACTIVE 3-COLUMN WEBGIS WORKBENCH */
+          <>
+            <Sidebar
+              activeProject={activeProject}
+              layers={layers}
+              onToggleLayer={handleToggleLayer}
+              searchQuery={searchQuery}
+              onSearchChange={setSearchQuery}
+              statusFilter={statusFilter}
+              onStatusFilterChange={setStatusFilter}
+            />
 
-        {/* Center: WebGIS Interactive Map Canvas */}
-        <WebGISMap
-          parcels={parcels}
-          buildings={buildings}
-          roads={roads}
-          layers={layers}
-          selectedFeature={selectedFeature}
-          onSelectFeature={setSelectedFeature}
-        />
+            <WebGISMap
+              parcels={parcels}
+              buildings={buildings}
+              roads={roads}
+              layers={layers}
+              selectedFeature={selectedFeature}
+              onSelectFeature={setSelectedFeature}
+            />
 
-        {/* Right: Feature Inspector & Verification Actions */}
-        <FeatureInspector
-          feature={selectedFeature}
-          onClose={() => setSelectedFeature(null)}
-          onUpdateGeometry={handleUpdateGeometry}
-          onVerify={handleVerify}
-          onOpenFieldVerification={() => setIsFieldVerificationOpen(true)}
-        />
+            <FeatureInspector
+              feature={selectedFeature}
+              onClose={() => setSelectedFeature(null)}
+              onUpdateGeometry={handleUpdateGeometry}
+              onVerify={handleVerify}
+              onOpenFieldVerification={() => setIsFieldVerificationOpen(true)}
+            />
+          </>
+        )}
       </main>
 
       {/* 3. MODAL DIALOGS */}

@@ -30,11 +30,15 @@ const defaultSchema: DatabaseSchema = {
   audit_logs: [],
 };
 
-import { fileURLToPath } from 'url';
+function getStoragePath(): string {
+  const local = path.resolve(process.cwd(), 'cadastral_store.json');
+  const parent = path.resolve(process.cwd(), '../cadastral_store.json');
+  if (fs.existsSync(local)) return local;
+  if (fs.existsSync(parent)) return parent;
+  return local;
+}
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const storagePath = path.resolve(__dirname, '../../cadastral_store.json');
+const storagePath = getStoragePath();
 
 class StoreDatabase {
   private data: DatabaseSchema;
