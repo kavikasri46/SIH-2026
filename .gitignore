@@ -1,0 +1,38 @@
+
+# Dependencies
+node_modules/
+*/node_modules/
+__pycache__/
+*.pyc
+.venv/
+env/
+venv/
+
+# Build outputs
+dist/
+build/
+*.egg-info/
+
+# Environment and secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs and runtime databases
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+uploads/*
+!uploads/.gitkeep
+cadastral_store.json
+backend/cadastral_store.json
+cadastral.sqlite*
+
+# OS and IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

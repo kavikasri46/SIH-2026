@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  # 1. PostGIS Database
+  postgis:
+    image: postgis/postgis:16-3.4
+    container_name: sih26012-postgis
+    environment:
+      POSTGRES_USER: cadastral_admin
+      POSTGRES_PASSWORD: cadastral_secure_password_2026
+      POSTGRES_DB: cadastral_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgis_data:/var/lib/postgresql/data
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    restart: unless-stopped
+
+  # 2. Python AI & GIS Microservice
+  ai-service:
+    build:
+      context: ./ai-service
+      dockerfile: Dockerfile
+    container_name: sih26012-ai-service
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./models:/app/models
+      - ./datasets:/app/datasets
+    restart: unless-stopped
+
+  # 3. Node.js Backend Gateway
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: sih26012-backend
+    environment:
+      PORT: 5000
+      NODE_ENV: production
+      DATABASE_URL: postgresql://cadastral_admin:cadastral_secure_password_2026@postgis:5432/cadastral_db
+      AI_SERVICE_URL: http://ai-service:8000
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgis
+      - ai-service
+    restart: unless-stopped
+
+  # 4. React WebGIS Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: sih26012-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  postgis_data:
