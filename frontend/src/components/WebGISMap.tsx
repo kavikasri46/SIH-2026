@@ -21,7 +21,7 @@ export const WebGISMap: React.FC<WebGISMapProps> = ({
   layers,
   selectedFeature,
   onSelectFeature,
-  center = [77.5885, 12.9680],
+  center = [82.968, 25.314],
   zoom = 16.5,
 }) => {
   const mapContainer = useRef<HTMLDivElement>(null);
@@ -41,13 +41,11 @@ export const WebGISMap: React.FC<WebGISMapProps> = ({
           'osm-tiles': {
             type: 'raster',
             tiles: [
-              'https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png',
-              'https://b.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png',
-              'https://c.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png',
+              'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
             ],
             tileSize: 256,
-            maxzoom: 20,
-            attribution: '&copy; CartoDB &copy; OpenStreetMap contributors',
+            maxzoom: 19,
+            attribution: '&copy; OpenStreetMap contributors',
           },
           'satellite-tiles': {
             type: 'raster',
@@ -55,30 +53,33 @@ export const WebGISMap: React.FC<WebGISMapProps> = ({
               'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
             ],
             tileSize: 256,
-            maxzoom: 18,
-            attribution: 'Esri World Imagery',
+            maxzoom: 19,
+            attribution: 'Esri World Imagery, Maxar, Earthstar Geographics',
           },
         },
         layers: [
-          {
-            id: 'osm-layer',
-            type: 'raster',
-            source: 'osm-tiles',
-            minzoom: 0,
-            maxzoom: 20,
-          },
           {
             id: 'satellite-layer',
             type: 'raster',
             source: 'satellite-tiles',
             minzoom: 0,
-            maxzoom: 18,
+            maxzoom: 19,
+          },
+          {
+            id: 'osm-layer',
+            type: 'raster',
+            source: 'osm-tiles',
+            minzoom: 0,
+            maxzoom: 19,
+            layout: {
+              visibility: 'none',
+            },
           },
         ],
       },
       center: center,
       zoom: 16.5,
-      maxZoom: 18.5,
+      maxZoom: 19,
     });
 
     map.current.on('mousemove', (e) => {
@@ -239,6 +240,7 @@ export const WebGISMap: React.FC<WebGISMapProps> = ({
     map.current.setLayoutProperty('buildings-line', 'visibility', layers.buildings ? 'visible' : 'none');
     map.current.setLayoutProperty('roads-line', 'visibility', layers.roads ? 'visible' : 'none');
     map.current.setLayoutProperty('satellite-layer', 'visibility', layers.orthomosaic ? 'visible' : 'none');
+    map.current.setLayoutProperty('osm-layer', 'visibility', !layers.orthomosaic ? 'visible' : 'none');
   }, [layers]);
 
   // Fly to selected feature

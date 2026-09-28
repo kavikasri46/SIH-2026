@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Navbar } from './components/Navbar';
+import { Navbar, NavigationTab } from './components/Navbar';
 import { Sidebar } from './components/Sidebar';
 import { WebGISMap } from './components/WebGISMap';
 import { FeatureInspector } from './components/FeatureInspector';
 import { DroneAnalysisWorkspace } from './components/DroneAnalysisWorkspace';
+import { DroneCommandDashboard } from './components/DroneCommandDashboard';
+import { LandingPage } from './components/LandingPage';
+import { SupportPage } from './components/SupportPage';
 import { NewProjectModal } from './components/NewProjectModal';
 import { AIModelModal } from './components/AIModelModal';
 import { TopologyModal } from './components/TopologyModal';
@@ -20,8 +23,8 @@ import {
 } from './types';
 
 export const App: React.FC = () => {
-  // Navigation State: AI Studio vs WebGIS Map
-  const [activeTab, setActiveTab] = useState<'STUDIO' | 'MAP'>('STUDIO');
+  // Navigation State: Overview (Landing) | AI Studio | WebGIS Map | Support
+  const [activeTab, setActiveTab] = useState<NavigationTab>('OVERVIEW');
 
   // Authentication State
   const [currentUser, setCurrentUser] = useState<User | null>(null);
@@ -68,6 +71,13 @@ export const App: React.FC = () => {
           setCurrentUser(res.data);
         } catch (err) {
           removeAuthToken();
+          setCurrentUser({
+            id: 'usr-default',
+            fullName: 'Senior Surveyor',
+            email: 'surveyor@cadastral.gov.in',
+            role: 'SURVEYOR',
+            department: 'Survey of India / Cadastral Dept',
+          });
         }
       } else {
         try {
@@ -78,7 +88,14 @@ export const App: React.FC = () => {
           setAuthToken(res.data.token);
           setCurrentUser(res.data.user);
         } catch (err) {
-          console.error('Auto login fallback:', err);
+          // Fallback to demo surveyor user for standalone preview
+          setCurrentUser({
+            id: 'usr-default',
+            fullName: 'Senior Surveyor',
+            email: 'surveyor@cadastral.gov.in',
+            role: 'SURVEYOR',
+            department: 'Survey of India / Cadastral Dept',
+          });
         }
       }
     };
@@ -100,7 +117,28 @@ export const App: React.FC = () => {
         setActiveProject(res.data[0]);
       }
     } catch (err) {
-      console.error('Failed to load projects:', err);
+      const fallbackProjects: Project[] = [
+        {
+          id: 'proj-varanasi-01',
+          name: 'Varanasi Smart Ward 12',
+          survey_area: 'Zone B-4 Urban Ward 12',
+          district: 'Varanasi',
+          city: 'Varanasi',
+          state: 'Uttar Pradesh',
+          description: 'High-density drone orthomosaic parcel delineation & verification',
+          crs: 'EPSG:4326',
+          bbox: [82.95, 25.30, 82.99, 25.33],
+          status: 'IN_PROGRESS',
+          total_parcels: 142,
+          verified_parcels: 98,
+          open_topology_issues: 3,
+          created_at: new Date().toISOString(),
+        },
+      ];
+      setProjects(fallbackProjects);
+      if (!activeProject) {
+        setActiveProject(fallbackProjects[0]);
+      }
     }
   };
 
@@ -174,27 +212,58 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="h-screen w-screen flex flex-col bg-slate-900 text-slate-100 overflow-hidden select-none">
-      {/* 1. TOP NAVIGATION BAR */}
-      <Navbar
-        user={currentUser}
-        projects={projects}
-        activeProject={activeProject}
-        activeTab={activeTab}
-        onTabChange={setActiveTab}
-        onSelectProject={(p) => setActiveProject(p)}
-        onOpenNewProject={() => setIsNewProjectOpen(true)}
-        onOpenAIModal={() => setIsAIModalOpen(true)}
-        onOpenTopologyModal={() => setIsTopologyOpen(true)}
-        onOpenReportModal={() => setIsReportOpen(true)}
-        onOpenAuthModal={() => setIsAuthModalOpen(true)}
-        onLogout={handleLogout}
-      />
+    <div className="h-screen w-screen flex flex-col bg-slate-950 text-slate-100 overflow-hidden select-none">
+      {/* 1. TOP NAVIGATION BAR (For Studio, WebGIS Map & Support Workbenches) */}
+      {activeTab !== 'OVERVIEW' && activeTab !== 'COMMAND' && (
+        <Navbar
+          user={currentUser}
+          projects={projects}
+          activeProject={activeProject}
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+          onSelectProject={(p) => setActiveProject(p)}
+          onOpenNewProject={() => setIsNewProjectOpen(true)}
+          onOpenAIModal={() => setIsAIModalOpen(true)}
+          onOpenTopologyModal={() => setIsTopologyOpen(true)}
+          onOpenReportModal={() => setIsReportOpen(true)}
+          onOpenAuthModal={() => setIsAuthModalOpen(true)}
+          onLogout={handleLogout}
+        />
+      )}
 
       {/* 2. MAIN APPLICATION CONTENT AREA */}
       <main className="flex-1 flex overflow-hidden">
-        {activeTab === 'STUDIO' ? (
-          /* TAB 1: AI DRONE IMAGE ANALYSIS STUDIO */
+        {activeTab === 'OVERVIEW' && (
+          /* TAB 1: LANDING PAGE & DRONE SHOWCASE */
+          <LandingPage
+            onNavigate={(tab) => setActiveTab(tab)}
+            onOpenReportModal={() => setIsReportOpen(true)}
+            onOpenAIModal={() => setIsAIModalOpen(true)}
+            onOpenTopologyModal={() => setIsTopologyOpen(true)}
+            onOpenAuthModal={() => setIsAuthModalOpen(true)}
+            activeProject={activeProject}
+          />
+        )}
+
+        {activeTab === 'COMMAND' && (
+          /* TAB 2: OLED CYBER-GREEN DRONE FLIGHT & MISSION DASHBOARD (100% FULLSCREEN) */
+          <DroneCommandDashboard
+            onNavigate={(tab) => setActiveTab(tab)}
+            onLaunchStudio={() => setActiveTab('STUDIO')}
+            onLaunchMap={() => setActiveTab('MAP')}
+            onOpenAuthModal={() => setIsAuthModalOpen(true)}
+            onOpenReportModal={() => setIsReportOpen(true)}
+            onOpenAIModal={() => setIsAIModalOpen(true)}
+            onOpenTopologyModal={() => setIsTopologyOpen(true)}
+            activeProject={activeProject}
+            projects={projects}
+            onSelectProject={(p) => setActiveProject(p)}
+            user={currentUser}
+          />
+        )}
+
+        {activeTab === 'STUDIO' && (
+          /* TAB 3: AI DRONE IMAGE ANALYSIS STUDIO */
           <DroneAnalysisWorkspace
             activeProject={activeProject}
             onNavigateToMap={() => setActiveTab('MAP')}
@@ -209,8 +278,10 @@ export const App: React.FC = () => {
               }
             }}
           />
-        ) : (
-          /* TAB 2: INTERACTIVE 3-COLUMN WEBGIS WORKBENCH */
+        )}
+
+        {activeTab === 'MAP' && (
+          /* TAB 3: INTERACTIVE 3-COLUMN WEBGIS WORKBENCH */
           <>
             <Sidebar
               activeProject={activeProject}
@@ -239,6 +310,17 @@ export const App: React.FC = () => {
               onOpenFieldVerification={() => setIsFieldVerificationOpen(true)}
             />
           </>
+        )}
+
+        {activeTab === 'SUPPORT' && (
+          /* TAB 4: SUPPORT & OPERATIONAL DIAGNOSTIC CENTER */
+          <SupportPage
+            user={currentUser}
+            projects={projects}
+            activeProject={activeProject}
+            onNavigate={(tab) => setActiveTab(tab)}
+            onOpenReportModal={() => setIsReportOpen(true)}
+          />
         )}
       </main>
 

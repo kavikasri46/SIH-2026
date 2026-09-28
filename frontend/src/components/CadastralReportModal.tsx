@@ -64,7 +64,7 @@ export const CadastralReportModal: React.FC<CadastralReportModalProps> = ({
     doc.setFontSize(16);
     doc.text('GOVERNMENT CADASTRAL SURVEY & RESURVEY REPORT', 14, 15);
     doc.setFontSize(9);
-    doc.text(`Project: ${activeProject.name} | SIH26012 Automated WebGIS System`, 14, 24);
+    doc.text(`Project: ${activeProject.name} | AeroCadastre AI Automated WebGIS Platform`, 14, 24);
 
     // Survey Details Table
     doc.setTextColor(30, 41, 59);

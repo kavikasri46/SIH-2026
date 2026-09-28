@@ -8,17 +8,21 @@ import {
   AlertTriangle,
   Cpu,
   FileText,
-  UploadCloud,
   Map as MapIcon,
-  Sparkles
+  Sparkles,
+  LifeBuoy,
+  Home,
+  Zap
 } from 'lucide-react';
+
+export type NavigationTab = 'OVERVIEW' | 'COMMAND' | 'STUDIO' | 'MAP' | 'SUPPORT';
 
 interface NavbarProps {
   user: User | null;
   projects: Project[];
   activeProject: Project | null;
-  activeTab: 'STUDIO' | 'MAP';
-  onTabChange: (tab: 'STUDIO' | 'MAP') => void;
+  activeTab: NavigationTab;
+  onTabChange: (tab: NavigationTab) => void;
   onSelectProject: (project: Project) => void;
   onOpenNewProject: () => void;
   onOpenAIModal: () => void;
@@ -58,64 +62,108 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <header className="h-14 bg-slate-900 border-b border-slate-800 px-4 flex items-center justify-between z-30 select-none">
-      {/* Brand & Project Selector */}
-      <div className="flex items-center space-x-4">
-        <div className="flex items-center space-x-2">
-          <div className="w-8 h-8 rounded-lg bg-cadastral-600 flex items-center justify-center text-white font-bold shadow-md shadow-cadastral-900/30">
+    <header className="h-14 bg-slate-900/95 border-b border-slate-800 px-3 sm:px-4 flex items-center justify-between z-30 select-none backdrop-blur-md">
+      {/* Brand & Tab Navigation */}
+      <div className="flex items-center space-x-3 sm:space-x-4">
+        <div 
+          onClick={() => onTabChange('OVERVIEW')}
+          className="flex items-center space-x-2.5 cursor-pointer group"
+        >
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-cadastral-700 to-cyan-500 flex items-center justify-center text-white font-bold shadow-md shadow-cadastral-900/40 group-hover:scale-105 transition-transform">
             <Compass className="w-5 h-5 text-white" />
           </div>
-          <div>
-            <div className="flex items-center space-x-2">
-              <span className="font-semibold text-sm tracking-tight text-slate-100">SIH26012 Cadastral GIS</span>
-              <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-cadastral-900/80 text-cadastral-400 border border-cadastral-700/40">
-                UAV AI Platform
+          <div className="hidden sm:block">
+            <div className="flex items-center space-x-1.5">
+              <span className="font-bold text-sm tracking-tight text-white">AeroCadastre AI</span>
+              <span className="text-[10px] uppercase font-mono px-1.5 py-0.2 rounded bg-cadastral-900/90 text-cyan-400 border border-cadastral-700/40">
+                UAV Platform
               </span>
             </div>
-            <div className="text-[11px] text-slate-400">Urban Parcel & Cadastral Mapping</div>
+            <div className="text-[11px] text-slate-400 font-medium">Urban Cadastral Mapping</div>
           </div>
         </div>
 
-        <div className="h-6 w-px bg-slate-800 mx-1" />
+        <div className="h-6 w-px bg-slate-800 mx-1 hidden sm:block" />
 
-        {/* Studio / Map View Switcher */}
-        <div className="flex items-center bg-slate-800/80 p-0.5 rounded-lg border border-slate-700">
+        {/* View Switcher Tabs: Overview | Command Dashboard | AI Studio | WebGIS Map | Support */}
+        <nav className="flex items-center bg-slate-800/90 p-0.5 rounded-lg border border-slate-700">
+          <button
+            onClick={() => onTabChange('OVERVIEW')}
+            className={`flex items-center space-x-1.5 px-2.5 sm:px-3 py-1 rounded-md text-xs font-medium transition-all ${
+              activeTab === 'OVERVIEW'
+                ? 'bg-cadastral-600 text-white shadow-sm'
+                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50'
+            }`}
+            title="Project Overview & Landing Page"
+          >
+            <Home className="w-3.5 h-3.5" />
+            <span className="hidden md:inline">Overview</span>
+          </button>
+
+          <button
+            onClick={() => onTabChange('COMMAND')}
+            className={`flex items-center space-x-1.5 px-2.5 sm:px-3 py-1 rounded-md text-xs font-medium transition-all ${
+              activeTab === 'COMMAND'
+                ? 'bg-emerald-600 text-white shadow-[0_0_10px_#10b981]'
+                : 'text-emerald-400/90 hover:text-emerald-300 hover:bg-slate-700/50'
+            }`}
+            title="Drone Mission & Flight Command Dashboard"
+          >
+            <Zap className="w-3.5 h-3.5 text-emerald-400" />
+            <span className="hidden md:inline font-semibold">Flight Hub</span>
+          </button>
+
           <button
             onClick={() => onTabChange('STUDIO')}
-            className={`flex items-center space-x-1.5 px-3 py-1 rounded-md text-xs font-medium transition-all ${
+            className={`flex items-center space-x-1.5 px-2.5 sm:px-3 py-1 rounded-md text-xs font-medium transition-all ${
               activeTab === 'STUDIO'
                 ? 'bg-cadastral-600 text-white shadow-sm'
                 : 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50'
             }`}
+            title="AI Drone Image Studio"
           >
             <Sparkles className="w-3.5 h-3.5" />
-            <span>AI Image Studio</span>
+            <span className="hidden md:inline">AI Studio</span>
           </button>
 
           <button
             onClick={() => onTabChange('MAP')}
-            className={`flex items-center space-x-1.5 px-3 py-1 rounded-md text-xs font-medium transition-all ${
+            className={`flex items-center space-x-1.5 px-2.5 sm:px-3 py-1 rounded-md text-xs font-medium transition-all ${
               activeTab === 'MAP'
                 ? 'bg-cadastral-600 text-white shadow-sm'
                 : 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50'
             }`}
+            title="Interactive WebGIS Map"
           >
             <MapIcon className="w-3.5 h-3.5" />
-            <span>WebGIS Map</span>
+            <span className="hidden md:inline">WebGIS Map</span>
           </button>
-        </div>
 
-        <div className="h-6 w-px bg-slate-800 mx-1" />
+          <button
+            onClick={() => onTabChange('SUPPORT')}
+            className={`flex items-center space-x-1.5 px-2.5 sm:px-3 py-1 rounded-md text-xs font-medium transition-all ${
+              activeTab === 'SUPPORT'
+                ? 'bg-cadastral-600 text-white shadow-sm'
+                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50'
+            }`}
+            title="Support & Diagnostics"
+          >
+            <LifeBuoy className="w-3.5 h-3.5" />
+            <span className="hidden md:inline">Support</span>
+          </button>
+        </nav>
+
+        <div className="h-6 w-px bg-slate-800 mx-1 hidden lg:block" />
 
         {/* Project Selector Dropdown */}
-        <div className="flex items-center space-x-2">
+        <div className="hidden lg:flex items-center space-x-2">
           <select
             value={activeProject?.id || ''}
             onChange={(e) => {
               const p = projects.find((x) => x.id === e.target.value);
               if (p) onSelectProject(p);
             }}
-            className="bg-slate-800/90 border border-slate-700 hover:border-slate-600 text-xs text-slate-200 rounded-md px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-cadastral-500 font-medium"
+            className="bg-slate-800/90 border border-slate-700 hover:border-slate-600 text-xs text-slate-200 rounded-md px-2.5 py-1.5 focus:outline-none focus:ring-1 focus:ring-cadastral-500 font-medium max-w-[180px] truncate"
           >
             {projects.map((p) => (
               <option key={p.id} value={p.id}>
@@ -126,11 +174,11 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           <button
             onClick={onOpenNewProject}
-            className="flex items-center space-x-1 text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 px-2.5 py-1.5 rounded-md transition-colors"
+            className="flex items-center space-x-1 text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 px-2 py-1.5 rounded-md transition-colors"
             title="Create New Cadastral Survey Project"
           >
             <Plus className="w-3.5 h-3.5 text-slate-400" />
-            <span>New Survey</span>
+            <span>New</span>
           </button>
         </div>
       </div>
@@ -139,7 +187,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       <div className="flex items-center space-x-2">
         <button
           onClick={onOpenAIModal}
-          className="flex items-center space-x-1.5 text-xs bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700 px-3 py-1.5 rounded-md transition-colors"
+          className="hidden sm:flex items-center space-x-1.5 text-xs bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700 px-2.5 py-1.5 rounded-md transition-colors"
         >
           <Cpu className="w-3.5 h-3.5 text-cadastral-400" />
           <span>AI Registry</span>
@@ -147,30 +195,30 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         <button
           onClick={onOpenTopologyModal}
-          className={`flex items-center space-x-1.5 text-xs px-3 py-1.5 rounded-md border transition-colors ${
+          className={`hidden md:flex items-center space-x-1.5 text-xs px-2.5 py-1.5 rounded-md border transition-colors ${
             (activeProject?.open_topology_issues || 0) > 0
               ? 'bg-amber-950/40 text-amber-300 border-amber-800/60 hover:bg-amber-900/40'
               : 'bg-slate-800/80 text-slate-300 border-slate-700 hover:bg-slate-800'
           }`}
         >
           <AlertTriangle className="w-3.5 h-3.5 text-amber-400" />
-          <span>Topology Issues ({activeProject?.open_topology_issues ?? 0})</span>
+          <span>Topology ({activeProject?.open_topology_issues ?? 0})</span>
         </button>
 
         <button
           onClick={onOpenReportModal}
-          className="flex items-center space-x-1.5 text-xs bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700 px-3 py-1.5 rounded-md transition-colors"
+          className="flex items-center space-x-1.5 text-xs bg-emerald-950/50 hover:bg-emerald-900/60 text-emerald-300 border border-emerald-800/60 px-2.5 py-1.5 rounded-md transition-colors"
         >
           <FileText className="w-3.5 h-3.5 text-emerald-400" />
-          <span>Export PDF</span>
+          <span className="hidden sm:inline">Export PDF</span>
         </button>
 
-        <div className="h-6 w-px bg-slate-800 mx-2" />
+        <div className="h-6 w-px bg-slate-800 mx-1 sm:mx-2" />
 
         {/* User Profile & Role Info */}
         {user ? (
-          <div className="flex items-center space-x-3">
-            <div className="flex flex-col items-end">
+          <div className="flex items-center space-x-2 sm:space-x-3">
+            <div className="flex flex-col items-end hidden sm:flex">
               <span className="text-xs font-medium text-slate-200">{user.fullName}</span>
               <span className={`text-[10px] font-mono px-1.5 py-0.2 rounded border ${getRoleBadgeColor(user.role)}`}>
                 {user.role}

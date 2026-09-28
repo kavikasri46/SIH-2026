@@ -8,7 +8,7 @@
 }
 
 code, pre {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
 }
 
 /* Custom scrollbar */
@@ -17,28 +17,160 @@ code, pre {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0f172a;
+  background: #070b14;
 }
 ::-webkit-scrollbar-thumb {
-  background: #334155;
+  background: #1e293b;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #475569;
+  background: #334155;
 }
 
+/* Glassmorphism utilities */
+.glass-panel {
+  background: rgba(12, 19, 36, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(56, 189, 248, 0.15);
+}
+
+.glass-panel-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.glass-panel-hover:hover {
+  background: rgba(14, 23, 44, 0.9);
+  border-color: rgba(56, 189, 248, 0.4);
+  box-shadow: 0 10px 30px -10px rgba(2, 132, 199, 0.3);
+}
+
+.glass-card-glow {
+  background: linear-gradient(135deg, rgba(16, 27, 51, 0.8) 0%, rgba(10, 16, 31, 0.9) 100%);
+  border: 1px solid rgba(14, 165, 233, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
+}
+
+/* Laser Scanner Animation */
+@keyframes laser-scan {
+  0% {
+    top: 0%;
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    top: 98%;
+    opacity: 0.8;
+  }
+}
+
+.animate-laser-scan {
+  animation: laser-scan 2.4s ease-in-out infinite alternate;
+}
+
+/* Float Animation */
+@keyframes float-subtle {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-float {
+  animation: float-subtle 4s ease-in-out infinite;
+}
+
+/* Radar pulse animation */
+@keyframes radar-pulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 18px rgba(14, 165, 233, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(14, 165, 233, 0);
+  }
+}
+
+.animate-radar-pulse {
+  animation: radar-pulse 2.5s infinite;
+}
+
+/* Grid background */
+.tech-grid-bg {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+}
+
+.tech-grid-cyan {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(14, 165, 233, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(14, 165, 233, 0.06) 1px, transparent 1px);
+}
+
+/* MapLibre popup style */
 .maplibregl-popup-content {
-  background-color: #1e293b !important;
+  background-color: #0f172a !important;
   color: #f8fafc !important;
   border-radius: 8px !important;
   padding: 12px 16px !important;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5) !important;
-  border: 1px solid #334155 !important;
+  box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.6) !important;
+  border: 1px solid #1e293b !important;
 }
 
 .maplibregl-popup-anchor-top .maplibregl-popup-tip {
-  border-bottom-color: #1e293b !important;
+  border-bottom-color: #0f172a !important;
 }
 .maplibregl-popup-anchor-bottom .maplibregl-popup-tip {
-  border-top-color: #1e293b !important;
+  border-top-color: #0f172a !important;
 }
+
+/* OLED Cyber-Green Dashboard Design System */
+.oled-card {
+  background: linear-gradient(180deg, rgba(16, 24, 20, 0.65) 0%, rgba(8, 12, 10, 0.85) 100%);
+  border: 1px solid rgba(34, 197, 94, 0.16);
+  box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+.oled-card-glow {
+  background: linear-gradient(145deg, rgba(20, 32, 26, 0.8) 0%, rgba(8, 13, 11, 0.95) 100%);
+  border: 1px solid rgba(34, 197, 94, 0.28);
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.9), 0 0 24px -4px rgba(34, 197, 94, 0.15);
+  backdrop-filter: blur(24px);
+}
+
+.oled-pill-green {
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 65%, #15803d 100%);
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(134, 239, 172, 0.3);
+}
+
+.oled-pill-green:hover {
+  background: linear-gradient(135deg, #4ade80 0%, #22c55e 65%, #16a34a 100%);
+  box-shadow: 0 0 28px rgba(34, 197, 94, 0.55), inset 0 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+.oled-pill-dark {
+  background: rgba(12, 20, 16, 0.7);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  backdrop-filter: blur(12px);
+}
+
+.oled-nav-active {
+  background: linear-gradient(90deg, rgba(34, 197, 94, 0.16) 0%, rgba(16, 185, 129, 0.04) 100%);
+  border: 1px solid rgba(34, 197, 94, 0.45);
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.15), inset 0 0 10px rgba(34, 197, 94, 0.08);
+}
+
