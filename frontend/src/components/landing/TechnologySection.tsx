@@ -6,7 +6,9 @@ export const TechnologySection: React.FC = () => {
     {
       category: 'Frontend & WebGIS',
       icon: Layers,
-      color: 'text-emerald-400',
+      color: 'text-[#C46824]',
+      bg: 'bg-[#FAF0E4]',
+      border: 'border-[#DFCDBA]',
       technologies: [
         { name: 'React 19', desc: 'Modern component runtime' },
         { name: 'TypeScript', desc: 'Strict type safety' },
@@ -17,7 +19,9 @@ export const TechnologySection: React.FC = () => {
     {
       category: 'Backend & Gateway',
       icon: Server,
-      color: 'text-green-400',
+      color: 'text-[#8C4615]',
+      bg: 'bg-[#FAF0E4]',
+      border: 'border-[#DFCDBA]',
       technologies: [
         { name: 'Node.js & Express', desc: 'High-throughput REST API' },
         { name: 'TypeScript', desc: 'Typed domain models' },
@@ -28,7 +32,9 @@ export const TechnologySection: React.FC = () => {
     {
       category: 'AI & Computer Vision',
       icon: Cpu,
-      color: 'text-emerald-300',
+      color: 'text-[#1E5B75]',
+      bg: 'bg-[#E9F3F7]',
+      border: 'border-[#BDDBE6]',
       technologies: [
         { name: 'PyTorch 2.2+', desc: 'Deep learning inference' },
         { name: 'SegFormer-B0', desc: 'Transformer segmentation' },
@@ -39,7 +45,9 @@ export const TechnologySection: React.FC = () => {
     {
       category: 'GIS & Spatial Engine',
       icon: Database,
-      color: 'text-teal-400',
+      color: 'text-[#2D6A4F]',
+      bg: 'bg-[#EAEFEA]',
+      border: 'border-[#B9D1BE]',
       technologies: [
         { name: 'PostGIS / Shapely', desc: 'Planar spatial geometry' },
         { name: 'OGC GeoJSON', desc: 'Standard vector exchange' },
@@ -50,18 +58,18 @@ export const TechnologySection: React.FC = () => {
   ];
 
   return (
-    <section id="technology-section" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-emerald-950">
+    <section id="technology-section" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-[#E8DFD3]">
       
       {/* Section Header */}
       <div className="text-center max-w-3xl mx-auto mb-14">
-        <div className="inline-flex items-center space-x-2 text-xs font-mono text-emerald-400 uppercase tracking-wider mb-3">
-          <Box className="w-4 h-4 text-emerald-400" />
+        <div className="inline-flex items-center space-x-2 text-xs font-mono text-[#8C4615] font-bold uppercase tracking-wider mb-3 px-3 py-1 bg-[#F0E6D8] border border-[#DFCDBA] rounded-full">
+          <Box className="w-3.5 h-3.5 text-[#C46824]" />
           <span>Production Architecture</span>
         </div>
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1E1B18] tracking-tight">
           Enterprise Technology Stack
         </h2>
-        <p className="mt-3 text-sm sm:text-base text-slate-300">
+        <p className="mt-3 text-sm sm:text-base text-[#5C5248]">
           Built on proven, production-grade geospatial and deep learning foundations adhering to OGC standards.
         </p>
       </div>
@@ -73,27 +81,27 @@ export const TechnologySection: React.FC = () => {
           return (
             <div
               key={idx}
-              className="p-6 rounded-3xl oled-card flex flex-col justify-between shadow-lg hover:border-emerald-500/50 transition-all hover:-translate-y-1"
+              className="p-6 rounded-3xl beige-card beige-card-hover flex flex-col justify-between group"
             >
               <div>
                 <div className="flex items-center space-x-3 mb-5">
-                  <div className={`p-2.5 rounded-xl bg-emerald-950/80 border border-emerald-800/60 ${cat.color} shadow-[0_0_10px_rgba(52,211,153,0.15)]`}>
+                  <div className={`p-2.5 rounded-xl ${cat.bg} border ${cat.border} ${cat.color} shadow-sm`}>
                     <Icon className="w-5 h-5" />
                   </div>
-                  <h3 className="text-sm font-bold text-white">{cat.category}</h3>
+                  <h3 className="text-sm font-bold text-[#1E1B18]">{cat.category}</h3>
                 </div>
 
                 <div className="space-y-3">
                   {cat.technologies.map((t, tIdx) => (
-                    <div key={tIdx} className="p-3 rounded-xl bg-[#08150f] border border-emerald-950">
-                      <div className="text-xs font-bold text-emerald-300 font-mono">{t.name}</div>
-                      <div className="text-[11px] text-slate-400 mt-0.5">{t.desc}</div>
+                    <div key={tIdx} className="p-3 rounded-xl bg-[#FAF6F0] border border-[#DFCDBA]">
+                      <div className="text-xs font-bold text-[#8C4615] font-mono">{t.name}</div>
+                      <div className="text-[11px] text-[#6B6054] mt-0.5">{t.desc}</div>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="mt-6 pt-3 border-t border-emerald-950 text-[10px] font-mono text-emerald-400 font-semibold uppercase">
+              <div className="mt-6 pt-3 border-t border-[#EFE8DC] text-[10px] font-mono text-[#2D6A4F] font-bold uppercase">
                 ACTIVE COMPONENT
               </div>
             </div>

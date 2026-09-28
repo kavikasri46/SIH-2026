@@ -26,18 +26,18 @@ export const SecuritySection: React.FC = () => {
   ];
 
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-emerald-950/60">
+    <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-[#E8DFD3]">
       
       {/* Section Header */}
       <div className="text-center max-w-3xl mx-auto mb-14">
-        <div className="inline-flex items-center space-x-2 text-xs font-mono text-emerald-400 uppercase tracking-wider mb-3">
-          <ShieldCheck className="w-4 h-4 text-emerald-400" />
+        <div className="inline-flex items-center space-x-2 text-xs font-mono text-[#8C4615] font-bold uppercase tracking-wider mb-3 px-3 py-1 bg-[#F0E6D8] border border-[#DFCDBA] rounded-full">
+          <ShieldCheck className="w-3.5 h-3.5 text-[#C46824]" />
           <span>Enterprise Integrity</span>
         </div>
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1E1B18] tracking-tight">
           Security, Access Control & Auditability
         </h2>
-        <p className="mt-3 text-sm sm:text-base text-zinc-400">
+        <p className="mt-3 text-sm sm:text-base text-[#5C5248]">
           Engineered for government cadastral records management with strict role demarcation and immutable provenance.
         </p>
       </div>
@@ -49,17 +49,17 @@ export const SecuritySection: React.FC = () => {
           return (
             <div
               key={idx}
-              className="p-6 rounded-3xl bg-[#060e0a]/90 border border-emerald-900/40 shadow-lg flex flex-col justify-between hover:border-emerald-500/40 transition-colors"
+              className="p-6 rounded-3xl beige-card beige-card-hover flex flex-col justify-between group"
             >
               <div>
-                <div className="p-3 w-fit rounded-2xl bg-emerald-950 text-emerald-400 border border-emerald-800/50 mb-4 shadow-[0_0_15px_rgba(16,185,129,0.15)]">
+                <div className="p-3 w-fit rounded-2xl bg-[#FAF0E4] text-[#C46824] border border-[#DFCDBA] mb-4 shadow-sm">
                   <Icon className="w-5 h-5" />
                 </div>
-                <h3 className="text-sm font-bold text-white mb-2">{feat.title}</h3>
-                <p className="text-xs text-zinc-400 leading-relaxed">{feat.desc}</p>
+                <h3 className="text-sm font-bold text-[#1E1B18] mb-2">{feat.title}</h3>
+                <p className="text-xs text-[#6B6054] leading-relaxed">{feat.desc}</p>
               </div>
 
-              <div className="mt-6 pt-3 border-t border-emerald-950 flex items-center space-x-1.5 text-xs text-emerald-400 font-mono">
+              <div className="mt-6 pt-3 border-t border-[#EFE8DC] flex items-center space-x-1.5 text-xs text-[#2D6A4F] font-mono font-bold">
                 <CheckCircle2 className="w-3.5 h-3.5" />
                 <span>Enforced</span>
               </div>

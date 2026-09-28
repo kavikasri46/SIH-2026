@@ -16,51 +16,51 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({
   };
 
   return (
-    <footer className="border-t border-emerald-900/40 bg-[#040805] text-slate-400 text-xs py-14 px-4 sm:px-6 lg:px-8">
+    <footer className="border-t border-[#E3D8CA] bg-[#F4EDE2] text-[#6B6054] text-xs py-14 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-8 mb-12">
         
         {/* Brand Column (2 cols) */}
         <div className="md:col-span-2 space-y-4">
           <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 rounded-xl bg-emerald-600 flex items-center justify-center text-white font-bold shadow-md shadow-emerald-950">
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-[#C46824] to-[#E59858] flex items-center justify-center text-white font-bold shadow-sm">
               <Compass className="w-4 h-4" />
             </div>
             <div>
-              <span className="font-bold text-base text-white font-mono">AeroCadastre AI</span>
-              <div className="text-[10px] text-emerald-400 font-mono">AI • GIS • DRONE INTELLIGENCE</div>
+              <span className="font-bold text-base text-[#1E1B18] font-mono">AeroCadastre AI</span>
+              <div className="text-[10px] text-[#8C4615] font-mono font-bold">AI • GIS • DRONE INTELLIGENCE</div>
             </div>
           </div>
 
-          <p className="text-xs text-slate-400 max-w-sm leading-relaxed">
+          <p className="text-xs text-[#6B6054] max-w-sm leading-relaxed">
             Automated urban parcel mapping, deep learning building extraction, and OGC-compliant spatial topology validation platform.
           </p>
 
-          <div className="text-[11px] font-mono text-slate-500">
+          <div className="text-[11px] font-mono text-[#8C7E70]">
             Autonomous Drone Geospatial Platform • Cadastral AI System
           </div>
         </div>
 
         {/* Column 2: Platform */}
         <div className="space-y-3">
-          <h4 className="text-xs font-bold text-white uppercase font-mono tracking-wider">Platform</h4>
+          <h4 className="text-xs font-bold text-[#1E1B18] uppercase font-mono tracking-wider">Platform</h4>
           <ul className="space-y-2">
             <li>
-              <button onClick={() => scrollTo('ai-section')} className="hover:text-emerald-300 transition-colors">
+              <button onClick={() => scrollTo('ai-section')} className="hover:text-[#C46824] transition-colors">
                 AI Analysis
               </button>
             </li>
             <li>
-              <button onClick={() => scrollTo('gis-section')} className="hover:text-emerald-300 transition-colors">
+              <button onClick={() => scrollTo('gis-section')} className="hover:text-[#C46824] transition-colors">
                 GIS Mapping
               </button>
             </li>
             <li>
-              <button onClick={() => scrollTo('workflow-section')} className="hover:text-emerald-300 transition-colors">
+              <button onClick={() => scrollTo('workflow-section')} className="hover:text-[#C46824] transition-colors">
                 Workflow
               </button>
             </li>
             <li>
-              <button onClick={onOpenReportModal} className="hover:text-emerald-300 transition-colors">
+              <button onClick={onOpenReportModal} className="hover:text-[#C46824] transition-colors">
                 Certified Reports
               </button>
             </li>
@@ -69,25 +69,25 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({
 
         {/* Column 3: Technology */}
         <div className="space-y-3">
-          <h4 className="text-xs font-bold text-white uppercase font-mono tracking-wider">Technology</h4>
+          <h4 className="text-xs font-bold text-[#1E1B18] uppercase font-mono tracking-wider">Technology</h4>
           <ul className="space-y-2">
             <li>
-              <button onClick={() => scrollTo('technology-section')} className="hover:text-emerald-300 transition-colors">
+              <button onClick={() => scrollTo('technology-section')} className="hover:text-[#C46824] transition-colors">
                 React 19 & MapLibre
               </button>
             </li>
             <li>
-              <button onClick={() => scrollTo('technology-section')} className="hover:text-emerald-300 transition-colors">
+              <button onClick={() => scrollTo('technology-section')} className="hover:text-[#C46824] transition-colors">
                 Node.js REST API
               </button>
             </li>
             <li>
-              <button onClick={() => scrollTo('technology-section')} className="hover:text-emerald-300 transition-colors">
+              <button onClick={() => scrollTo('technology-section')} className="hover:text-[#C46824] transition-colors">
                 PyTorch SegFormer-B0
               </button>
             </li>
             <li>
-              <button onClick={() => scrollTo('technology-section')} className="hover:text-emerald-300 transition-colors">
+              <button onClick={() => scrollTo('technology-section')} className="hover:text-[#C46824] transition-colors">
                 PostGIS Topology
               </button>
             </li>
@@ -96,20 +96,20 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({
 
         {/* Column 4: Resources */}
         <div className="space-y-3">
-          <h4 className="text-xs font-bold text-white uppercase font-mono tracking-wider">Resources</h4>
+          <h4 className="text-xs font-bold text-[#1E1B18] uppercase font-mono tracking-wider">Resources</h4>
           <ul className="space-y-2">
             <li>
-              <button onClick={() => scrollTo('architecture-section')} className="hover:text-emerald-300 transition-colors">
+              <button onClick={() => scrollTo('architecture-section')} className="hover:text-[#C46824] transition-colors">
                 Architecture Diagram
               </button>
             </li>
             <li>
-              <button onClick={() => scrollTo('technology-section')} className="hover:text-emerald-300 transition-colors">
+              <button onClick={() => scrollTo('technology-section')} className="hover:text-[#C46824] transition-colors">
                 Security & RBAC
               </button>
             </li>
             <li>
-              <button onClick={onLaunchPlatform} className="hover:text-white transition-colors text-emerald-400 font-semibold">
+              <button onClick={onLaunchPlatform} className="hover:text-[#8C4615] transition-colors text-[#C46824] font-bold">
                 Launch Flight Hub →
               </button>
             </li>
@@ -118,10 +118,10 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({
 
       </div>
 
-      <div className="max-w-7xl mx-auto pt-8 border-t border-emerald-950 flex flex-wrap items-center justify-between gap-4 text-[11px] text-slate-500 font-mono">
+      <div className="max-w-7xl mx-auto pt-8 border-t border-[#E0D4C3] flex flex-wrap items-center justify-between gap-4 text-[11px] text-[#8C7E70] font-mono">
         <div>© 2026 AeroCadastre AI. Geospatial Cadastral Intelligence Platform.</div>
         <div className="flex items-center space-x-4">
-          <span className="text-emerald-400">● OGC WGS84 STANDARDS</span>
+          <span className="text-[#8C4615] font-bold">● OGC WGS84 STANDARDS</span>
           <span>PYTORCH 2.2+</span>
           <span>MAPLIBRE GL</span>
         </div>

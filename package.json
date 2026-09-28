@@ -5,5 +5,8 @@
   "scripts": {
     "build": "npm --prefix frontend install && npm --prefix frontend run build",
     "vercel-build": "npm --prefix frontend install && npm --prefix frontend run build"
+  },
+  "dependencies": {
+    "vite": "^6.2.1"
   }
 }

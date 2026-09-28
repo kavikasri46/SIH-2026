@@ -1,6 +1,6 @@
 import { User, Project, GeoJSONFeatureCollection, TopologyError, AIModelRecord } from '../types';
 
-const API_BASE = (import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL || '/api').replace(/\/$/, '');
+const API_BASE = (((import.meta as any).env?.VITE_API_BASE_URL || (import.meta as any).env?.VITE_API_URL || '/api') as string).replace(/\/$/, '');
 
 export function getAuthToken(): string | null {
   return localStorage.getItem('cadastral_token');

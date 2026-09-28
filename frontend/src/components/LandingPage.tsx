@@ -43,7 +43,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
   return (
     <div 
       onScroll={handleScroll}
-      className="flex-1 overflow-y-auto bg-[#030605] text-zinc-100 tech-grid-bg scroll-smooth selection:bg-emerald-500 selection:text-black flex flex-col w-full min-h-screen"
+      className="flex-1 overflow-y-auto bg-[#FAF6F0] text-[#1E1B18] tech-grid-beige scroll-smooth selection:bg-[#C46824] selection:text-white flex flex-col w-full min-h-screen"
     >
       
       {/* 1. STICKY MODERN NAVIGATION BAR */}

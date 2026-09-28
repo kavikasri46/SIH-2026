@@ -1,54 +1,54 @@
 import React, { useState } from 'react';
-import { Cpu, Sliders, CheckCircle2, Sparkles, Layers } from 'lucide-react';
+import { Cpu, Sliders, Sparkles } from 'lucide-react';
 
 export const AISection: React.FC = () => {
   const [sliderPos, setSliderPos] = useState(50);
 
   return (
-    <section id="ai-section" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-emerald-950">
+    <section id="ai-section" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-[#E8DFD3]">
       
       {/* Section Header */}
       <div className="text-center max-w-3xl mx-auto mb-14">
-        <div className="inline-flex items-center space-x-2 text-xs font-mono text-emerald-400 uppercase tracking-wider mb-3">
-          <Cpu className="w-4 h-4 text-emerald-400" />
+        <div className="inline-flex items-center space-x-2 text-xs font-mono text-[#8C4615] font-bold uppercase tracking-wider mb-3 px-3 py-1 bg-[#F0E6D8] border border-[#DFCDBA] rounded-full">
+          <Cpu className="w-3.5 h-3.5 text-[#C46824]" />
           <span>Deep Learning Segmentation</span>
         </div>
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1E1B18] tracking-tight">
           AI That Understands Aerial Imagery
         </h2>
-        <p className="mt-3 text-sm sm:text-base text-slate-300">
+        <p className="mt-3 text-sm sm:text-base text-[#5C5248]">
           Deep learning models analyze aerial imagery to identify visible geographic features and produce candidate spatial features for GIS workflows.
         </p>
       </div>
 
-      {/* Two-Column AI Showcase: Architecture Breakdown & Interactive Split Viewer */}
+      {/* Two-Column AI Showcase */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
         
         {/* Left Column: AI Pipeline Flow & Models */}
         <div className="lg:col-span-5 space-y-6">
-          <div className="p-6 rounded-3xl oled-card space-y-4">
-            <h3 className="text-base font-bold text-white flex items-center space-x-2">
-              <Sparkles className="w-4 h-4 text-emerald-400" />
+          <div className="p-6 rounded-3xl beige-card space-y-4">
+            <h3 className="text-base font-bold text-[#1E1B18] flex items-center space-x-2">
+              <Sparkles className="w-4 h-4 text-[#C46824]" />
               <span>Implemented Model Architectures</span>
             </h3>
 
             <div className="space-y-3 text-xs">
-              <div className="p-3.5 rounded-xl bg-[#08150f] border border-emerald-900/50">
-                <div className="font-bold text-emerald-300 font-mono">SegFormer-B0 Transformer</div>
-                <div className="text-slate-400 mt-1 leading-relaxed">
+              <div className="p-3.5 rounded-xl bg-[#FAF6F0] border border-[#DFCDBA]">
+                <div className="font-bold text-[#8C4615] font-mono">SegFormer-B0 Transformer</div>
+                <div className="text-[#6B6054] mt-1 leading-relaxed">
                   Hierarchical transformer encoder with lightweight all-MLP decoder for efficient urban parcel semantic segmentation.
                 </div>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-[#08150f] border border-emerald-900/50">
-                <div className="font-bold text-green-300 font-mono">ResNet34-UNet Backbone</div>
-                <div className="text-slate-400 mt-1 leading-relaxed">
+              <div className="p-3.5 rounded-xl bg-[#FAF6F0] border border-[#DFCDBA]">
+                <div className="font-bold text-[#2D6A4F] font-mono">ResNet34-UNet Backbone</div>
+                <div className="text-[#6B6054] mt-1 leading-relaxed">
                   Encoder-decoder CNN architecture tailored for sharp building footprint boundary extraction and road centerline tracking.
                 </div>
               </div>
             </div>
 
-            <div className="pt-2 border-t border-emerald-950 text-[11px] text-slate-400 font-mono">
+            <div className="pt-2 border-t border-[#EFE8DC] text-[11px] text-[#8C7E70] font-mono">
               Input: 512x512 Window Tiling • Output: Multi-class Vector Masks
             </div>
           </div>
@@ -57,14 +57,14 @@ export const AISection: React.FC = () => {
         {/* Right Column: Draggable Comparison Slider */}
         <div className="lg:col-span-7 space-y-3">
           
-          <div className="flex items-center justify-between px-2 text-xs font-mono text-slate-400">
-            <span className="text-slate-300 font-semibold">Visual Comparison</span>
-            <span className="text-[10px] uppercase px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800/50">
+          <div className="flex items-center justify-between px-2 text-xs font-mono text-[#7A6F64]">
+            <span className="text-[#1E1B18] font-semibold">Visual Comparison</span>
+            <span className="text-[10px] uppercase px-2 py-0.5 rounded bg-[#F0E6D8] text-[#8C4615] border border-[#DFCDBA] font-bold">
               Illustrative AI visualization
             </span>
           </div>
 
-          <div className="relative aspect-[16/10] w-full rounded-3xl overflow-hidden border border-emerald-900/50 bg-black shadow-2xl select-none">
+          <div className="relative aspect-[16/10] w-full rounded-3xl overflow-hidden border border-[#DFCDBA] bg-[#2A241F] shadow-xl select-none">
             
             {/* Background Layer: Extracted Cadastral Map */}
             <img
@@ -75,7 +75,7 @@ export const AISection: React.FC = () => {
 
             {/* Foreground Layer: Clipped Raw Drone Orthomosaic */}
             <div
-              className="absolute inset-y-0 left-0 overflow-hidden border-r-2 border-emerald-400 shadow-2xl"
+              className="absolute inset-y-0 left-0 overflow-hidden border-r-2 border-[#C46824] shadow-2xl"
               style={{ width: `${sliderPos}%` }}
             >
               <img
@@ -85,12 +85,12 @@ export const AISection: React.FC = () => {
                 style={{ width: '100%', minWidth: '100%', maxWidth: 'none' }}
               />
               
-              <div className="absolute top-4 left-4 px-3 py-1.5 rounded-lg bg-black/80 border border-slate-700 text-xs font-mono text-white font-bold backdrop-blur-md">
+              <div className="absolute top-4 left-4 px-3 py-1.5 rounded-lg bg-[#1E1B18]/90 border border-[#4E453C] text-xs font-mono text-[#FAF6F0] font-bold backdrop-blur-md shadow-md">
                 ORIGINAL IMAGERY
               </div>
             </div>
 
-            <div className="absolute top-4 right-4 px-3 py-1.5 rounded-lg bg-emerald-950/90 border border-emerald-500 text-xs font-mono text-emerald-300 font-bold backdrop-blur-md">
+            <div className="absolute top-4 right-4 px-3 py-1.5 rounded-lg bg-[#FAF0E4]/95 border border-[#DFCDBA] text-xs font-mono text-[#8C4615] font-bold backdrop-blur-md shadow-md">
               AI SEGMENTATION
             </div>
 
@@ -99,8 +99,8 @@ export const AISection: React.FC = () => {
               className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 z-20 pointer-events-none"
               style={{ left: `${sliderPos}%` }}
             >
-              <div className="w-9 h-9 rounded-full bg-emerald-500 border-2 border-white shadow-xl flex items-center justify-center text-slate-950 font-bold">
-                <Sliders className="w-4 h-4 text-slate-950" />
+              <div className="w-9 h-9 rounded-full bg-[#C46824] border-2 border-white shadow-xl flex items-center justify-center text-white font-bold">
+                <Sliders className="w-4 h-4 text-white" />
               </div>
             </div>
 
@@ -108,14 +108,14 @@ export const AISection: React.FC = () => {
 
           {/* Slider Controls */}
           <div className="flex items-center justify-center space-x-4 pt-2">
-            <span className="text-xs font-mono text-slate-400">Slide to compare layers:</span>
+            <span className="text-xs font-mono text-[#7A6F64]">Slide to compare layers:</span>
             <input
               type="range"
               min="0"
               max="100"
               value={sliderPos}
               onChange={(e) => setSliderPos(Number(e.target.value))}
-              className="w-48 accent-emerald-500 cursor-pointer"
+              className="w-48 accent-[#C46824] cursor-pointer"
             />
           </div>
 
